@@ -55,6 +55,10 @@ async def update_user(user: UpdateUser, username: str, db: db_dependency):
     if user.gender is not None:
         db_user.gender = user.gender
     db.commit()
+    return {
+        "success": True,
+        "message": "user's data updated"
+    }
 
 @app.post("/users/", status_code=status.HTTP_201_CREATED)
 async def create_user(user: CreateUser, db: db_dependency):
