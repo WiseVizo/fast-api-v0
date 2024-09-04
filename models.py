@@ -1,17 +1,15 @@
-from sqlalchemy import Boolean, Column, Integer, String
+from sqlalchemy import Boolean, Column, Integer, String, Float
 from database import base
 
 
 class User(base):
     __tablename__ = "users"
-    
-    id = Column(Integer, primary_key=True, index=True)
-    username = Column(String(50), unique=True)
+    username = Column(String(100), nullable=False, unique=True)
+    email = Column(String(250), unique=True, primary_key=True, index=True)
+    password = Column(String(250), nullable=False)
 
-class Post(base):
-    __tablename__ = "posts"
-
-    id = Column(Integer, primary_key=True, index=True)
-    title = Column(String(50))
-    content  = Column(String(150))
-    user_id = Column(Integer)
+    # Additional user information
+    body_weight = Column(Float, nullable=True)  # Weight in kilograms 
+    height = Column(Float, nullable=True)  # Height in centimeters
+    age = Column(Integer, nullable=True)
+    gender = Column(String(10), nullable=True)  # 'Male', 'Female', etc
