@@ -3,7 +3,7 @@ from database import base
 
 
 class User(base):
-    __tablename__ = "apiusrs"
+    __tablename__ = "apiv2"
     username = Column(String(100), nullable=False)
     email = Column(String(250), unique=True, primary_key=True, index=True)
     password = Column(String(250), nullable=False)
