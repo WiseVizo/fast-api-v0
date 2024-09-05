@@ -37,9 +37,9 @@ def get_db():
 
 db_dependency = Annotated[Session, Depends(get_db)]
 
-@app.post("/users/{username}/post", status_code=status.HTTP_201_CREATED)
-async def update_user(user: UpdateUser, username: str, db: db_dependency):
-    db_user = db.query(models.User).filter(models.User.username == username).first()
+@app.post("/users/{email}/post", status_code=status.HTTP_201_CREATED)
+async def update_user(user: UpdateUser, email: str, db: db_dependency):
+    db_user = db.query(models.User).filter(models.User.email == email).first()
         
     # Check if the user exists
     if not db_user:
@@ -75,9 +75,9 @@ async def create_user(user: CreateUser, db: db_dependency):
         }
 
 
-@app.get("/users/{username}/", status_code=status.HTTP_200_OK)
-async def get_user(username: str, db: db_dependency):
-    user = db.query(models.User).filter(models.User.username == username).first() 
+@app.post("/users/details/{email}/", status_code=status.HTTP_200_OK)
+async def get_user(email: str, db: db_dependency):
+    user = db.query(models.User).filter(models.User.email == email).first() 
     if not user:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail="user not found")
     return {
@@ -93,7 +93,7 @@ async def get_user(username: str, db: db_dependency):
         }
     }
 
-@app.get("/users/auth/{email}/", status_code=status.HTTP_200_OK)
+@app.post("/users/auth/{email}/", status_code=status.HTTP_200_OK)
 async def validate_user(email: str, db: db_dependency):
 
     db_user = db.query(models.User).filter(models.User.email == email).first()
